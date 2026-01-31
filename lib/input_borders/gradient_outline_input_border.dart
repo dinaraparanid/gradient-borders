@@ -96,6 +96,34 @@ class GradientOutlineInputBorder extends InputBorder {
     );
   }
 
+  @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    if (a is GradientOutlineInputBorder) {
+      return GradientOutlineInputBorder(
+        gradient: Gradient.lerp(a.gradient, gradient, t)!,
+        width: lerpDouble(a.width, width, t)!,
+        gapPadding: lerpDouble(a.gapPadding, gapPadding, t)!,
+        borderRadius: BorderRadius.lerp(a.borderRadius, borderRadius, t)!,
+      );
+    }
+
+    return super.lerpFrom(a, t);
+  }
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    if (b is GradientOutlineInputBorder) {
+      return GradientOutlineInputBorder(
+        gradient: Gradient.lerp(gradient, b.gradient, t)!,
+        width: lerpDouble(width, b.width, t)!,
+        gapPadding: lerpDouble(gapPadding, b.gapPadding, t)!,
+        borderRadius: BorderRadius.lerp(borderRadius, b.borderRadius, t)!,
+      );
+    }
+
+    return super.lerpTo(b, t);
+  }
+
   Paint _getPaint(Rect rect) {
     return Paint()
       ..strokeWidth = width

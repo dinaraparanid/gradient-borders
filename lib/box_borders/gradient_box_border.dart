@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/widgets.dart';
 
 class GradientBoxBorder extends BoxBorder {
@@ -65,6 +67,30 @@ class GradientBoxBorder extends BoxBorder {
   @override
   ShapeBorder scale(double t) {
     return this;
+  }
+
+  @override
+  ShapeBorder? lerpFrom(ShapeBorder? a, double t) {
+    if (a is GradientBoxBorder) {
+      return GradientBoxBorder(
+        gradient: Gradient.lerp(a.gradient, gradient, t)!,
+        width: lerpDouble(a.width, width, t)!,
+      );
+    }
+
+    return super.lerpFrom(a, t);
+  }
+
+  @override
+  ShapeBorder? lerpTo(ShapeBorder? b, double t) {
+    if (b is GradientBoxBorder) {
+      return GradientBoxBorder(
+        gradient: Gradient.lerp(gradient, b.gradient, t)!,
+        width: lerpDouble(width, b.width, t)!,
+      );
+    }
+
+    return super.lerpTo(b, t);
   }
 
   Paint _getPaint(Rect rect) {
